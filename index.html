@@ -1,12 +1,79 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset = "utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title> WordMatrix </title>
-</head>
+    <head>
+        <meta charset = "utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title> WordMatrix </title>
 
-<body>
+        <link rel="stylesheet" href="./style.css">
 
-</body>
+    </head>
+
+    <body>
+        <div class="floating-letters">
+            <div class="letter" style="left: 10%; animation-delay: 0s;">W</div>
+            <div class="letter" style="left: 20%; animation-delay: 2s;">O</div>
+            <div class="letter" style="left: 30%; animation-delay: 4s;">R</div>
+            <div class="letter" style="left: 40%; animation-delay: 6s;">D</div>
+            <div class="letter" style="left: 50%; animation-delay: 8s;">M</div>
+            <div class="letter" style="left: 60%; animation-delay: 1s;">A</div>
+            <div class="letter" style="left: 70%; animation-delay: 3s;">T</div>
+            <div class="letter" style="left: 80%; animation-delay: 5s;">R</div>
+            <div class="letter" style="left: 90%; animation-delay: 7s;">I</div>
+            <div class="letter" style="left: 100%; animation-delay: 9s;">X</div>
+        </div>
+
+
+        <div id="game-container" class="game-container"> 
+            <h2 class="game-title"> WordMatrix </h2> 
+            <p class="game-subtitle"> Word Shuffle Challenge </p>
+        </div>
+
+
+        <div id="instructions" class="instructions">
+            <h3> How to Play: </h3>
+            <ul class="instruct-list">
+                <li> You'll get 3 scrambled words per game  </li>
+                <li> Each word gives you 3 attempts to guess correctly </li>
+                <li> Type your answer and press Enter or click Submit </li>
+                <li> Score points for each correct word </li>
+                <li> Click 'Get Hint' to get the meaning of the word for a hint to start 😉 </li>
+                <li> Challenge yourself to get all 3! </li>
+            </ul>
+        </div>
+
+
+        <div id="game-board" class="game-board">
+            <div class="game-stats">
+                <div class="stat-item">
+                    <div class="stat-label">Word</div>
+                    <div class="stat-value" id="current-word">1 / 3</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Score</div>
+                    <div class="stat-value" id="score">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Attempts</div>
+                    <div class="stat-value" id="attempts">3</div>
+                </div>
+            </div>
+
+            <div class="word-display">
+                <div class="scrambled-word"> </div>
+                <p class="word-hint"> Unscramble the letters above </p>
+            </div>
+            
+            <div class="input-section">
+                <input type="text" class="guess-input" id="guess-input" placeholder="Type your guess here...">
+                <button id="submit-btn">submit</button>
+            </div>
+
+            <div class="game-controls">
+                    <button class="control-btn" id="new-game-btn">New Game</button>
+                    <button class="control-btn" id="skip-word-btn">Skip Word</button>
+                    <button class="control-btn" id="hint-btn">Get Hint</button>
+                </div>
+        </div>
+    </body>
 </html>
