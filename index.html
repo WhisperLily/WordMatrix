@@ -25,55 +25,60 @@
 
 
         <div id="game-container" class="game-container"> 
-            <h2 class="game-title"> WordMatrix </h2> 
-            <p class="game-subtitle"> Word Shuffle Challenge </p>
-        </div>
-
-
-        <div id="instructions" class="instructions">
-            <h3> How to Play: </h3>
-            <ul class="instruct-list">
-                <li> You'll get 3 scrambled words per game  </li>
-                <li> Each word gives you 3 attempts to guess correctly </li>
-                <li> Type your answer and press Enter or click Submit </li>
-                <li> Score points for each correct word </li>
-                <li> Click 'Get Hint' to get the meaning of the word for a hint to start 😉 </li>
-                <li> Challenge yourself to get all 3! </li>
-            </ul>
-        </div>
-
-
-        <div id="game-board" class="game-board">
-            <div class="game-stats">
-                <div class="stat-item">
-                    <div class="stat-label">Word</div>
-                    <div class="stat-value" id="current-word">1 / 3</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Score</div>
-                    <div class="stat-value" id="score">0</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Attempts</div>
-                    <div class="stat-value" id="attempts">3</div>
-                </div>
+            <div class="game-header"> 
+                <h1 class="game-title"> WordMatrix </h1> 
+                <p class="game-subtitle"> Word Shuffle Challenge </p>
             </div>
 
-            <div class="word-display">
-                <div class="scrambled-word"> </div>
-                <p class="word-hint"> Unscramble the letters above </p>
+
+            <div id="instructions" class="instructions">
+                <h3> HOW TO PLAY </h3>
+                <ul class="instruct-list">
+                    <li> You'll get 3 scrambled words per game  </li>
+                    <li> Each word gives you 3 attempts to guess correctly </li>
+                    <li> Unscramble the letters and type your answer </li>
+                    <li> Press Enter or click Submit </li>
+                    <li> Score points for each correct word </li>
+                    <li> Click 'Get Hint' to get the meaning of the word for a hint to start </li>
+                    <li> Challenge yourself to get all 3! </li>
+                </ul>
             </div>
-            
-            <div class="input-section">
-                <input type="text" class="guess-input" id="guess-input" placeholder="Type your guess here...">
-                <button id="submit-btn">submit</button>
+
+
+            <div id="game-board" class="game-board">
+                <div class="game-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">Word</div>
+                        <div class="stat-value" id="current-word">1 / 3</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Score</div>
+                        <div class="stat-value" id="score">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Attempts</div>
+                        <div class="stat-value" id="attempts">3</div>
+                    </div>
+                </div>
+
+                <div class="word-display">
+                    <div class="scrambled-word">SCIENCE</div>
+                    <div class="word-hint"></div>
+                </div>
+                
+                <div class="input-section">
+                    <input type="text" class="guess-input" id="guess-input" placeholder="Type your guess here...">
+                    <button id="submit-btn" class="submit-btn">submit</button>
+                </div>
+
+                <div class="feedback" id="feedback"></div>
             </div>
 
             <div class="game-controls">
-                    <button class="control-btn" id="new-game-btn">New Game</button>
-                    <button class="control-btn" id="skip-word-btn">Skip Word</button>
-                    <button class="control-btn" id="hint-btn">Get Hint</button>
-                </div>
+                <button class="control-btn" id="new-game-btn">New Game</button>
+                <button class="control-btn" id="skip-word-btn">Skip Word</button>
+                <button class="control-btn" id="hint-btn">Get Hint</button>
+            </div>
         </div>
     </body>
 </html>

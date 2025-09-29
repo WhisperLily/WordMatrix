@@ -14,8 +14,13 @@ def get_HomePage():
     return HTMLResponse(content=html_content)
 
 
-@app.get("word")   #getting game status label; how many words left to play
-@app.get("score")   #getting status label; how many games won 
-@app.get("attempts")    #getting status label; how many attempts left 
-@app.get("scrmabled_word")      #getting the scrambled letters
+@app.get("update_word")   #getting game status label; how many words left to play
+@app.get("update_score")   #getting status label; how many games won 
+@app.get("update_attempts")    #getting status label; how many attempts left 
+@app.get("scrambled_word")      #getting the scrambled letters
 @app.get("hint")       #click hint button to show word meaning
+@app.get("check_submit")
+@app.get("feedback")
+@app.get("restart_game")
+@app.get("getNewWord")
+@app.get("replay")
