@@ -274,3 +274,58 @@ font-weight: 600;
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
+
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 2.5rem;
+    }      
+    .game-board {
+        padding: 2rem;
+        margin: 1rem;
+    }       
+    .scrambled-word {
+        font-size: 2rem;
+        letter-spacing: 4px;
+    }       
+    .game-controls {
+        flex-direction: column;
+    }        
+    .control-btn {
+        width: 100%;
+    }
+    .guess-input {
+        font-size: 1rem;
+        padding: 1rem;
+        height: 2.5rem;
+    }
+    
+    .guess-input::placeholder {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        padding: 1rem;
+    }       
+    .game-title {
+        font-size: 2rem;
+    }       
+    .scrambled-word {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+    .guess-input {
+        font-size: 0.9rem;
+        padding: 0.8rem;
+        height: 2rem;
+    }
+    
+    .guess-input::placeholder {
+        font-size: 0.8rem;
+    }
+}
