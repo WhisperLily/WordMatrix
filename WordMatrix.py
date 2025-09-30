@@ -15,11 +15,11 @@ class Game:     #this class manages anything to do with words
         self.word_level = 1
 
     def load_dictionary(self):  # func to read CSV file and put it in the dict variable
-        with open('WordMatrix-Dict.csv', 'r') as file:  # Open CSV file for reading
+        with open('WordMatrix-Dict.csv', 'r', encoding='utf-8-sig') as file:  # Open CSV file for reading
             reader = csv.DictReader(file)  # create a CSV reader that treats each row as a dictionary
             for row in reader:  # go through each row in the CSV file one by one
                 print(row.keys())
-                word = row['Word'].lower()  # get the word from the 'word' column and make it lowercase
+                word = row['Word'].lower().strip()  # get the word from the 'word' column and make it lowercase
                 hint = row['Meaning']  # get the hint from the 'meaning' column
                 self.dictionary[word] = hint  # Store the word and meaning in the dictionary
 
@@ -37,6 +37,12 @@ class Game:     #this class manages anything to do with words
         random.shuffle(letters)       #Shuffle letters of the word in the list
         self.scrambled = ''.join(letters)       #Convert the shuffled letters back into a string 
         
+        # Keep reshuffling until it's different from original
+        while self.scrambled == self.current_word:
+            letters = list(word)
+            random.shuffle(letters)
+            self.scrambled = ''.join(letters)
+
         return self.scrambled
 
 

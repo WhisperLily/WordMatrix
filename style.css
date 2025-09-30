@@ -147,7 +147,7 @@ font-weight: 600;
     margin-bottom: 2rem;
 }
 .scrambled-word{
-    font-size: 4rem;
+    font-size:clamp(1rem, 5vw, 4rem);
     font-weight: 600;
     letter-spacing: 8px;
     margin-bottom: 1rem;
@@ -156,7 +156,10 @@ font-weight: 600;
 }
 .word-hint {
     opacity: 0.8;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    color:goldenrod;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     margin-bottom: 2rem;
 }
 
@@ -210,11 +213,11 @@ font-weight: 600;
     min-height: 2rem;
 }
 .feedback.correct {
-    color: #14ef64;
+    color: #025721;
     font-weight: 600;
 }
 .feedback.wrong {
-    color: #ee1414;
+    color: #9d0101;
     font-weight: 600;
 }
 

@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <title> WordMatrix </title>
 
-        <link rel="stylesheet" href="./style.css">
-        <script src="./script.js"></script>
+        <link rel="stylesheet" href="/static/style.css">
+        <script src="/static/script.js"></script>
 
     </head>
 
@@ -63,13 +63,13 @@
                 </div>
 
                 <div class="word-display">
-                    <div class="scrambled-word"></div>
-                    <div class="word-hint"></div>
+                    <div id="scrambled-word" class="scrambled-word"></div>
+                    <div id="word-hint" class="word-hint"></div>
                 </div>
                 
                 <div class="input-section">
-                    <input type="text" class="guess-input" id="guess-input" placeholder="Type your guess here...">
-                    <button id="submit-btn" class="submit-btn">submit</button>
+                    <input type="text" class="guess-input" id="guess-input" placeholder="Type your guess here..." onkeypress="if(event.key === 'Enter'){ submit_guess(); event.preventDefault(); }">
+                    <button id="submit-btn" class="submit-btn" onclick="submit_guess()">submit</button>
                 </div>
 
                 <div class="feedback" id="feedback"></div>

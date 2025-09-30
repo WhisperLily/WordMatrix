@@ -111,7 +111,7 @@ def new_game():
         
 @app.get("/api/hint")
 def get_hint():
-    thehint = game.hint(game.current)
+    thehint = game.hint(game.current_word)
     return{"hint":thehint}
     
              

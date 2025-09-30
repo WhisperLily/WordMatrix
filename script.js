@@ -1,21 +1,19 @@
 //load the stats and word
 document.addEventListener('DOMContentLoaded', () => {
-    LoadGame();
+    LoadGame();            
 });
 
 
-//when click sunbmit button
-document.getElementById('submit-btn').addEventListener('click', (e) => {
-    e.preventDefault();
-    submit_guess();
-});
-//for enter key:
-document.getElementById('guess-input').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        submit_guess();
+function fitWordToBox() {   //stop long words from going outside gameboard
+    const box = document.getElementById('scrambled-word');
+    let fontSize = 64; // start at 4rem (16px * 4)
+    box.style.fontSize = fontSize + 'px';
+
+    while (box.scrollWidth > box.clientWidth && fontSize > 12) { // minimum font size 12px
+        fontSize -= 1;
+        box.style.fontSize = fontSize + 'px';
     }
-});
+}
 
 
 //show initial state
@@ -29,6 +27,7 @@ function LoadGame(){
         document.getElementById("score").textContent = data.score;
         document.getElementById("attempts").textContent = data.attempts;
         document.getElementById("scrambled-word").textContent = data.scrambled;
+        fitWordToBox();
     })
     .catch(error => console.error(error));
 }
@@ -39,6 +38,13 @@ function submit_guess(){
     //sending the guess
     const guess = document.getElementById('guess-input').value
 
+    if (!guess) { //do not submit if input is empty
+        const feedback = document.getElementById('feedback');
+        feedback.textContent = "Please enter a guess!";
+        feedback.classList.add('wrong');
+        return; // stop submission
+    }
+
     fetch ('/api/submit', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -48,59 +54,88 @@ function submit_guess(){
     .then(data =>{
 
         //GUESS IS CORRECT
-        if (data.correct === True){
+        if (data.correct === true){
             if (data.game_over === 'False') {      //if they guessed correctly, still wordlevel remaining
+                document.getElementById('feedback').classList.remove('correct', 'wrong');
                 document.getElementById('feedback').classList.add('correct');
                 document.getElementById("feedback").textContent = "Your guess is correct!!";
+                setTimeout(() => {
+                    document.getElementById('feedback').style.display = 'none';
+                },2000);
+                document.getElementById('feedback').style.display = 'block';
                 document.getElementById("current-word").textContent = data.word_level;
                 document.getElementById("score").textContent = data.score;
                 document.getElementById("attempts").textContent = data.attempts;
+                document.getElementById("word-hint").style.display='none';
                 setTimeout(() => {
                     document.getElementById("scrambled-word").textContent = data.scrambled
-                }, 300);
+                    fitWordToBox();
+                }, 2000);
             }
             else if (data.game_over === 'True'){     //guessed correctly but game over
                 document.getElementById("score").textContent = data.score;
+                document.getElementById('feedback').classList.remove('correct', 'wrong');
                 document.getElementById('feedback').classList.add('correct');
                 document.getElementById("feedback").textContent = "Your guess is correct!!";
+                document.getElementById('feedback').style.display = 'block';
                 setTimeout(() => {
-                    document.getElementById('feedback').classList.remove('correct');
+                    document.getElementById('feedback').classList.remove('correct', 'wrong');
                     document.getElementById("feedback").textContent = "Game Over!"
-                }, 300);
+                }, 2000);
                 document.getElementById("final-score").textContent = data.score;
                 setTimeout(() => {
                     document.getElementById("game-board").style.display = 'none';   //hide game board
-                    document.getElementById("game-over").style.display='block'      //show game over box
-                }, 500);    //show the game over div!!
+                    document.getElementById("game-over").style.display='block';      //show game over box
+                }, 2000);    //show the game over div!!
             }
+            document.getElementById('guess-input').value = '';
         }
-        else if (data.correct === False){  //GUESS IS INCORRECT
+        else if (data.correct === false){  //GUESS IS INCORRECT
             if (data.game_over === 'attempts left') {     //attempts and word level remaining
                 document.getElementById("current-word").textContent = data.word_level;
                 document.getElementById("score").textContent = data.score;
                 document.getElementById("attempts").textContent = data.attempts;
+                document.getElementById('feedback').classList.remove('correct', 'wrong');
                 document.getElementById('feedback').classList.add('wrong');
                 document.getElementById("feedback").textContent = "Wrong! Try again";
+                setTimeout(() => {
+                    document.getElementById('feedback').style.display = 'none';
+                },5000);
+                document.getElementById('feedback').style.display = 'block';
             }
             else if (data.game_over === 'False') {     //no attempts left but word level left
                 document.getElementById("current-word").textContent = data.word_level;
                 document.getElementById("score").textContent = data.score;
                 document.getElementById("attempts").textContent = data.attempts;
+                document.getElementById('feedback').classList.remove('correct', 'wrong');
                 document.getElementById('feedback').classList.add('wrong');
-                document.getElementById("feedback").textContent = "The word was:" + data.actual;
+                document.getElementById("feedback").textContent = "The word was:" + data.actual.toUpperCase();
+                setTimeout(() => {
+                    document.getElementById('feedback').style.display = 'none';
+                },5000);
+                document.getElementById('feedback').style.display = 'block';
+                document.getElementById("word-hint").style.display='none';
                 setTimeout(() =>{
                     document.getElementById("scrambled-word").textContent = data.scrambled
-                }, 500);
+                    fitWordToBox();
+                }, 2000);
             }
             else if (data.game_over === 'True') {     //no attempt and word level left 
                 document.getElementById("score").textContent = data.score;
-                document.getElementById("feedback").textContent = "Game Over! The word was:" + data.actual;
+                document.getElementById("feedback").textContent = "Game Over! The word was: " +  data.actual.toUpperCase();
                 document.getElementById("final-score").textContent = data.score;
                 setTimeout(() => {
-                    document.getElementById('feedback').classList.remove('wrong');
+                    document.getElementById('feedback').style.display = 'none';
+                },5000);
+                document.getElementById('feedback').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('feedback').classList.remove('correct', 'wrong');
+                    document.getElementById("game-board").style.display = 'none';
                     document.getElementById("game-over").style.display='block'
-                }, 500);     //show the game over div!!
+                }, 2000);     //show the game over div!!
             }
+            // Clear input after processing the guess
+            document.getElementById('guess-input').value = '';
         }
     })
     .catch(error => console.error(error));
@@ -114,21 +149,35 @@ function new_Game(){
         document.getElementById("current-word").textContent = data.word_level;
         document.getElementById("score").textContent = data.score;
         document.getElementById("attempts").textContent = data.attempts;
+        document.getElementById("word-hint").style.display='none';
         document.getElementById("scrambled-word").textContent = data.scrambled;
+        fitWordToBox();
     })      //get the actual game data and can update the frontend
     .catch(error => console.error(error));      //handle errors
 }
 
 
 //skip word
+let skipsLeft = 3;  // max skips allowed
+
 function Skip_Word(){
+    if (skipsLeft <= 0) { //if no skips left
+        const feedback = document.getElementById('feedback');
+        feedback.textContent = "You have no skips left!";
+        feedback.classList.add('wrong');
+        return; // stop skipping
+    }
+
     fetch ('/api/skip', {method: 'GET' })    //sends request
     .then(response => response.json())   // converts the HTTP response to usable JSON
     .then(data => {
         document.getElementById("current-word").textContent = data.word_level;
         document.getElementById("score").textContent = data.score;
         document.getElementById("attempts").textContent = data.attempts;
+        document.getElementById("word-hint").style.display='none';
         document.getElementById("scrambled-word").textContent = data.scrambled;
+        fitWordToBox();
+        skipsLeft--;  // decrease remaining skips
     })      //get the actual game data and can update the frontend
     .catch(error => console.error(error));      //handle errors
 }
@@ -139,7 +188,8 @@ function get_hint(){
     fetch ('/api/hint', {method: 'GET' })    //sends request
     .then(response => response.json())   // converts the HTTP response to usable JSON
     .then(data => {
-        document.getElementsByClassName("word-hint").textContent = data.hint
+        document.getElementById("word-hint").style.display='block';
+        document.getElementById("word-hint").textContent = data.hint;
     })      //get the actual game data and can update the frontend
     .catch(error => console.error(error));      //handle errors
 }
@@ -147,13 +197,17 @@ function get_hint(){
 
 //play again
 function replay(){
+    document.getElementById("game-over").style.display='none';
+    document.getElementById("game-board").style.display = 'block';
     fetch ('/api/replay', {method: 'GET' })    //sends request
     .then(response => response.json())   // converts the HTTP response to usable JSON
     .then(data => {
         document.getElementById("current-word").textContent = data.word_level;
         document.getElementById("score").textContent = data.score;
         document.getElementById("attempts").textContent = data.attempts;
+        document.getElementById("word-hint").style.display='none';
         document.getElementById("scrambled-word").textContent = data.scrambled;
+        fitWordToBox();
     })      //get the actual game data and can update the frontend
     .catch(error => console.error(error));      //handle errors
 }
